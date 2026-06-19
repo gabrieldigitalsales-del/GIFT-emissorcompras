@@ -1,72 +1,111 @@
-# GIFT CONTROL - Quadro de Tarefas Inteligente
+# GIFT Emissor de Pedido de Compra
 
-Sistema web simples para a GIFT EXCELLENCE, estilo Trello, com cards coloridos, períodos Dia/Semana/Mês/Ano e agora com aba separada de Histórico.
+Sistema simples em React + Vite para emitir pedido de compra interno da GIFT.
 
-## Rodar localmente
+## O que tem
+
+- Login simples com senha `asd123`.
+- Cadastro de itens com link manual.
+- Quantidade em texto livre, por exemplo: `2 kits com 10 un cada`.
+- Campo separado `Qtd. para calculo`, usado para calcular subtotal.
+- Calculo automatico de subtotal e total estimado.
+- Botoes para adicionar, editar e apagar itens.
+- PDF parecido com o modelo simples: logo no canto superior esquerdo, tabela dos itens e total estimado.
+- Historico salvo no Supabase.
+- Numeracao automatica: `PC-2026-0001`, `PC-2026-0002`, etc.
+
+## Como rodar localmente
+
+1. Instale as dependencias:
 
 ```bash
 npm install
+```
+
+2. Copie o arquivo `.env.example` para `.env`:
+
+```bash
+cp .env.example .env
+```
+
+3. Preencha no `.env`:
+
+```env
+VITE_SUPABASE_URL=https://SEU-PROJETO.supabase.co
+VITE_SUPABASE_ANON_KEY=SUA_CHAVE_ANON_AQUI
+VITE_APP_PASSWORD=asd123
+```
+
+4. Rode o projeto:
+
+```bash
 npm run dev
 ```
 
-Senha inicial:
-
-```text
-asd123
-```
-
-## Novidade desta versão
-
-- Aba **Quadro** para tarefas.
-- Aba **Histórico** separada.
-- Registra automaticamente:
-  - tarefa criada;
-  - tarefa editada;
-  - tarefa movida de coluna;
-  - observação adicionada;
-  - tarefa apagada.
-- Botão para **baixar histórico em JSON**.
-- Botão para **baixar histórico em CSV**, que abre no Excel.
-- Botão para **limpar histórico** sem apagar tarefas.
-- Busca dentro do histórico.
-- Cards de resumo do histórico.
+5. Acesse o link que aparecer no terminal.
 
 ## Supabase
 
-1. Crie um projeto no Supabase.
-2. Rode o arquivo:
+No Supabase, abra o SQL Editor e rode o arquivo:
 
-```text
+```txt
 supabase/schema.sql
 ```
 
-3. Configure o `.env` com base no `.env.example`:
+Para zerar todos os pedidos depois, rode:
 
-```text
-VITE_SUPABASE_URL=sua_url
-VITE_SUPABASE_ANON_KEY=sua_chave_anon
-VITE_LOGIN_PASSWORD=asd123
-```
-
-Sem Supabase configurado, o sistema funciona em modo local usando `localStorage`.
-
-## Reset
-
-Para limpar tarefas e histórico:
-
-```text
+```txt
 supabase/reset.sql
 ```
 
-Esse reset não apaga arquivos diretamente de `storage.objects`.
+## Trocar logo
+
+Substitua o arquivo abaixo mantendo o mesmo nome:
+
+```txt
+public/logo-gift.png
+```
+
+Assim o sistema e o PDF passam a usar a logo nova.
 
 ## Deploy na Vercel
 
-- Suba o projeto no GitHub.
-- Importe na Vercel.
-- Adicione as variáveis de ambiente:
-  - `VITE_SUPABASE_URL`
-  - `VITE_SUPABASE_ANON_KEY`
-  - `VITE_LOGIN_PASSWORD`
-- Build command: `npm run build`
-- Output: `dist`
+1. Suba esse projeto para o GitHub.
+2. Importe na Vercel.
+3. Configure as variaveis de ambiente:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   - `VITE_APP_PASSWORD`
+4. Deploy.
+
+
+## Novidades desta versão
+
+- Dashboard com resumo de pendentes, aprovados e recusados.
+- Filtro por status: todos, pendente, aprovado, recusado, com comprovante e sem comprovante.
+- Botão para baixar histórico em CSV.
+- Botão para baixar histórico completo em ZIP com:
+  - `historico_pedidos.csv`
+  - `itens_dos_pedidos.csv`
+  - `historico_completo.json`
+  - pasta `comprovantes/` com os anexos encontrados.
+- Botão para exportar somente pedidos pendentes.
+- Botão para limpar histórico com confirmação digitando `LIMPAR`.
+- Motivo da recusa quando o financeiro recusar.
+- Dados do pagamento ao anexar comprovante:
+  - data do pagamento
+  - forma de pagamento
+  - responsável pelo pagamento
+- Botão para reabrir pedido e voltar para pendente.
+- Botão para duplicar pedido.
+- ZIP enviado sem `node_modules`.
+
+## Importante ao atualizar o Supabase
+
+Rode novamente o arquivo:
+
+```sql
+supabase/schema.sql
+```
+
+Ele é seguro para atualização e adiciona as novas colunas e permissões necessárias para comprovantes e limpeza do histórico.

@@ -366,3 +366,91 @@ td {
   .loginCard { padding: 26px; }
   .loginLogo { width: 180px; }
 }
+
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+.dashboard div {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,249,251,.99));
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 6px;
+  padding: 16px 17px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 5px;
+}
+.dashboard div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.85), transparent 20%, transparent 78%, rgba(224,27,27,.05));
+  pointer-events: none;
+}
+.dashboard svg { color: #d01818; }
+.dashboard span {
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .35px;
+}
+.dashboard strong {
+  font-size: 28px;
+  color: #111;
+  line-height: 1;
+}
+.dashboard small { margin: 0; }
+
+.adminBox {
+  border: 1px solid rgba(0,0,0,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(244,246,248,.96));
+  border-radius: 6px;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+}
+.adminTitle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #111;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.dangerBtn {
+  border: 1px solid rgba(181,18,18,.14);
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: .15px;
+  background: linear-gradient(180deg, #fff4f4, #ffdede);
+  color: #b51212;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.65);
+}
+.filterRow {
+  margin: 10px 0;
+}
+.filterRow label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 6px;
+  align-items: center;
+}
+.filterRow select {
+  grid-column: 1 / -1;
+}
+@media (max-width: 760px) {
+  .dashboard { grid-template-columns: 1fr; }
+}
